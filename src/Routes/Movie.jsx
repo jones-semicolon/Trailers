@@ -48,6 +48,12 @@ export default function Movie(argument) {
       setTrailer(data[0]);
     });
   }, [id]);
+  const share = () => {
+    navigator.share({
+      title: data.title,
+      url: `https://jonestly-source.github.io/Trailers/${data.id}`,
+    });
+  }
 
   useEffect(() => {
     setData({});
@@ -96,7 +102,7 @@ export default function Movie(argument) {
             </div>
             <div className="total-review">({data.popularity})</div>
             <button>
-              <IconShare3 />
+              <IconShare3 onClick={() => share(data.id)}/>
             </button>
           </div>
           <div className="title">{data.title}</div>

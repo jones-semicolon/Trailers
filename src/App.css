@@ -26,6 +26,7 @@ body,
   font-family: Poppins, helvetica;
   height: 100vh;
   height: 100dvh;
+  overflow-y: overlay;
 }
 
 button {
@@ -39,10 +40,30 @@ svg {
 
 /*conteeeeeeent*/
 
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #e30d0d transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #e30d0d;
+  border-radius: 10px;
+}
+
 main {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
 main > :last-child {
@@ -53,7 +74,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: min(3vw, 1rem) min(5vw, 3rem);
   position: fixed;
   width: 100%;
   z-index: 99;
@@ -61,7 +82,7 @@ nav {
   isolation: isolate;
 }
 
-main:has(nav + .query) nav {
+main:has(nav > button:first-child) nav {
   position: sticky;
 }
 
@@ -110,7 +131,8 @@ nav .search-button > input {
   width: 90%;
   font-size: 0.7rem;
   display: none;
-  font-size: clamp(.6rem, 2vw, 12px);
+  font-size: clamp(0.6rem, 2vw, 12px);
+  cursor: text;
 }
 
 nav .search-button svg {
@@ -229,7 +251,7 @@ img {
   --size: clamp(5px, 5vw, 20px);
   display: flex;
   flex-direction: column;
-  width: min(100%, 1344px);
+  margin-block: 1rem;
 }
 
 .library > * {
@@ -250,7 +272,6 @@ img {
 }
 
 .library > .items {
-  
   gap: 5px;
   padding-inline: var(--size);
   overflow-x: auto;
@@ -404,6 +425,7 @@ nav > button.return {
   width: 100%;
   aspect-ratio: 16 / 9;
   position: relative;
+
 }
 
 .details .banner::after {
@@ -508,6 +530,11 @@ nav > button.return {
   font-size: 1.2rem;
 }
 
+.details > .cast {
+  grid-area: 2 / 2 / 3 / 3;
+  overflow-x: auto;
+}
+
 .details > :is(.cast, .synopsis) {
   display: flex;
   flex-direction: column;
@@ -540,6 +567,8 @@ nav > button.return {
   color: var(--secondary-color);
   font-size: 0.6rem;
 }
+
+
 
 .details > .synopsis > div + p {
   text-indent: 1rem;
@@ -641,5 +670,24 @@ nav > button.return {
     background-color: hsl(0 2% 20% / 0.7);
     width: 100%;
     outline: 0.5px solid currentcolor;
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    margin-inline: 1rem;
+    grid-gap: 1rem;
+  }
+
+  .details > .banner {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+
+  .details > .info {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .details > .synopsis {
+    grid-area: 3 / 1 / 4 / 3;
   }
 }
