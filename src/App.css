@@ -31,7 +31,9 @@ body,
 
 button {
   all: unset;
+  cursor: pointer;
 }
+
 
 svg {
   height: 100%;
@@ -84,6 +86,7 @@ nav {
 
 main:has(nav > button:first-child) nav {
   position: sticky;
+  top: 0;
 }
 
 iframe {
@@ -284,8 +287,12 @@ img {
   overflow: hidden;
   position: relative;
   min-width: max(170px, min(20vw, 250px));
+  max-width: 250px;
   aspect-ratio: 16 / 9;
   scroll-snap-align: start;
+}
+
+.item {
   cursor: pointer;
 }
 
@@ -354,14 +361,16 @@ img {
 }
 
 .results > .items {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   flex-direction: column;
   gap: 10px;
 }
 
 .results > .items > .item {
-  display: flex;
+  display: grid;
   max-width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 100% - 5px));
   gap: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 5px;
@@ -369,13 +378,13 @@ img {
 }
 
 .results > .items :is(img, svg) {
-  flex-shrink: 1;
-  max-width: 30%;
   border-radius: inherit;
   aspect-ratio: 16 / 9;
   background-color: hsl(0 0% 30%);
-  stroke-opacity: 0.2;
+  display: grid;
+  place-items: center;
 }
+
 
 .results .item > .info {
   display: flex;
@@ -425,7 +434,8 @@ nav > button.return {
   width: 100%;
   aspect-ratio: 16 / 9;
   position: relative;
-
+  border-radius: clamp(0%, 10%, .5rem);
+  overflow: hidden;
 }
 
 .details .banner::after {
@@ -530,10 +540,6 @@ nav > button.return {
   font-size: 1.2rem;
 }
 
-.details > .cast {
-  grid-area: 2 / 2 / 3 / 3;
-  overflow-x: auto;
-}
 
 .details > :is(.cast, .synopsis) {
   display: flex;
@@ -553,6 +559,7 @@ nav > button.return {
   flex-direction: column;
   text-align: center;
   min-width: clamp(90px, 20vw, 100px);
+  max-width: 100px;
 }
 
 .cast > .casts :is(img, svg) {
@@ -671,23 +678,53 @@ nav > button.return {
     width: 100%;
     outline: 0.5px solid currentcolor;
   }
-
   .details {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, calc(50% - .5rem)));
     margin-inline: 1rem;
     grid-gap: 1rem;
+    align-items: center;
   }
-
   .details > .banner {
-    grid-area: 1 / 1 / 3 / 2;
+    grid-area: 1 / 1 / 4 / 2;
   }
-
+  
   .details > .info {
     grid-area: 1 / 2 / 2 / 3;
   }
   .details > .synopsis {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+  .details > .cast {
+    grid-area: 2 / 2 / 3 / 3;
+    overflow-x: auto;
+  }
+}
+
+@media screen and (600px <= width <= 1227px) {
+  .details > .synopsis {
     grid-area: 3 / 1 / 4 / 3;
+  }
+  .details > .banner {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+}
+
+@media screen and (600px <= width <= 700px) {  
+  .details > .cast {
+    grid-area: 2 / 1 / 3 / 3;
+  }
+  .details > .banner {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+}
+
+@media screen and (width <= 360px) {
+  .results > .items :is(img, svg) {
+    max-width: 30%;
+  }
+  .results > .items > .item{
+    display: flex;
+    flex-direction: row;
   }
 }

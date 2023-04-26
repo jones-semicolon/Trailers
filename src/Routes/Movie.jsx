@@ -82,14 +82,17 @@ export default function Movie(argument) {
                 }`}
                 alt={data.title}
               />
-              <IconPlayerPlay onClick={() => setPlay(true)} />
+              {trailer.key && (<button onClick={() => setPlay(true)} style={{zIndex: 1}}><IconPlayerPlay/></button>)}
             </>
           ) : (
             <iframe
-              src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${trailer.key}?showinfo=0&amp;rel=0&amp;modestbranding=1&amp;autoplay=1`}
               width="100%"
               height="100%"
               allow="autoplay"
+              allowFullScreen
+              loading="lazy"
+              
             />
           )}
         </div>
