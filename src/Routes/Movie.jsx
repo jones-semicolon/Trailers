@@ -7,7 +7,7 @@ import {
   IconSearch,
   IconUser,
 } from "@tabler/icons-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Library from "../components/Library";
 import SearchBar from "../components/SearchBar";
 import imdbServer from "../components/imdbServer";
@@ -16,6 +16,7 @@ import Loader from "../components/Loader";
 export default function Movie(argument) {
   const navigate = useNavigate();
   const location = useLocation();
+  const params = useParams()
   const [data, setData] = useState({});
   const [casts, setCasts] = useState({});
   const [libraries, setLibraries] = useState([]);
@@ -59,8 +60,8 @@ export default function Movie(argument) {
     setData({});
     setCasts({});
     setLibraries([]);
-    setId(location.state.id);
-  }, [location.state.id]);
+    setId(params.id);
+  }, [params.id]);
   return Object.keys(data).length &&
     Object.keys(casts).length &&
     libraries.length &&
@@ -77,12 +78,11 @@ export default function Movie(argument) {
           {!play ? (
             <>
               <img
-                src={`https://image.tmdb.org/t/p/original/${
-                  data.backdrop_path ? data.backdrop_path : data.poster_path
-                }`}
+                src={`https://image.tmdb.org/t/p/original/${data.backdrop_path ? data.backdrop_path : data.poster_path
+                  }`}
                 alt={data.title}
               />
-              {trailer.key && (<button onClick={() => setPlay(true)} style={{zIndex: 1}}><IconPlayerPlay/></button>)}
+              {trailer.key && (<button onClick={() => setPlay(true)} style={{ zIndex: 1 }}><IconPlayerPlay /></button>)}
             </>
           ) : (
             <iframe
@@ -92,7 +92,7 @@ export default function Movie(argument) {
               allow="autoplay"
               allowFullScreen
               loading="lazy"
-              
+
             />
           )}
         </div>
@@ -105,7 +105,7 @@ export default function Movie(argument) {
             </div>
             <div className="total-review">({data.popularity})</div>
             <button>
-              <IconShare3 onClick={() => share(data.id)}/>
+              <IconShare3 onClick={() => share(data.id)} />
             </button>
           </div>
           <div className="title">{data.title}</div>

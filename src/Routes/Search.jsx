@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import imdbServer from "../components/imdbServer";
 import Library, { Results } from "../components/Library";
 import SearchBar from "../components/SearchBar";
@@ -7,14 +7,15 @@ import { IconChevronLeft } from "@tabler/icons-react";
 
 export default function Search() {
   const location = useLocation();
+  const params = useParams()
   const navigate = useNavigate();
   const [results, setResults] = useState({});
 
   useEffect(() => {
-    imdbServer.search(location.state.query).then((data) => {
+    imdbServer.search(params.query).then((data) => {
       setResults({ library_title: "Movie", ...data });
     });
-  }, [location.state.query]);
+  }, [params.query]);
 
   return (
     <>
@@ -24,7 +25,7 @@ export default function Search() {
         </button>
         <SearchBar />
       </nav>
-      <div className="query">Searched for "{location.state.query}"</div>
+      <div className="query">Searched for "{params.query}"</div>
       {Object.keys(results).length ? <Results data={results} /> : null}
     </>
   );
