@@ -2,13 +2,13 @@ import react from "react";
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_TMDB_KEY;
-const BASED_URL = "https://api.themoviedb.org/3";
+const BASED_URL = "https://api.themoviedb.org/2";
 
 export default {
   upcomingMovies() {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/upcoming?api_key=${API_KEY}&page=1`
+        `${BASED_URL}/movie/upcoming?api_key=${API_KEY}&page=1`,
       );
       return await res.data;
     })();
@@ -16,7 +16,7 @@ export default {
   topRatedMovies() {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/top_rated?api_key=${API_KEY}&language=en&page=1`
+        `${BASED_URL}/movie/top_rated?api_key=${API_KEY}&language=en&page=1`,
       );
       return await res.data;
     })();
@@ -24,7 +24,7 @@ export default {
   movieDetails(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}?api_key=${API_KEY}&language=en`
+        `${BASED_URL}/movie/${id}?api_key=${API_KEY}&language=en`,
       );
       return await res.data;
     })();
@@ -32,7 +32,7 @@ export default {
   movieCast(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en`
+        `${BASED_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en`,
       );
       return await res.data;
     })();
@@ -40,7 +40,7 @@ export default {
   popularMovies() {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/popular?api_key=${API_KEY}&language=en`
+        `${BASED_URL}/movie/popular?api_key=${API_KEY}&language=en`,
       );
       return await res.data;
     })();
@@ -48,7 +48,7 @@ export default {
   trendingMovies() {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/trending/movie/week?api_key=${API_KEY}`
+        `${BASED_URL}/trending/movie/week?api_key=${API_KEY}`,
       );
       return await res.data;
     })();
@@ -56,7 +56,7 @@ export default {
   similarMovies(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}/similar?api_key=${API_KEY}&page=1`
+        `${BASED_URL}/movie/${id}/similar?api_key=${API_KEY}&page=1`,
       );
       return await res.data;
     })();
@@ -64,7 +64,7 @@ export default {
   recommendedMovies(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}/recommendations?api_key=${API_KEY}&page=1`
+        `${BASED_URL}/movie/${id}/recommendations?api_key=${API_KEY}&page=1`,
       );
       return await res.data;
     })();
@@ -72,7 +72,7 @@ export default {
   trailer(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}/videos?api_key=${API_KEY}`
+        `${BASED_URL}/movie/${id}/videos?api_key=${API_KEY}`,
       );
       return await res.data;
     })();
@@ -81,7 +81,7 @@ export default {
   backdrop(id) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/movie/${id}/images?api_key=${API_KEY}&language=en`
+        `${BASED_URL}/movie/${id}/images?api_key=${API_KEY}&language=en`,
       );
       return await res.data;
     })();
@@ -89,7 +89,7 @@ export default {
   search(query) {
     return (async () => {
       let res = await axios.get(
-        `${BASED_URL}/search/movie?api_key=${API_KEY}&language=en&query=${query}`
+        `${BASED_URL}/search/movie?api_key=${API_KEY}&language=en&query=${query}`,
       );
       return await res.data;
     })();

@@ -4,18 +4,6 @@ import Home from "./Routes/Home";
 import Movie from "./Routes/Movie";
 import Search from "./Routes/Search";
 
-// function App() {
-//   return (
-//     <main>
-//       <Routes>
-//         <Route path="/Trailers" element={<Home />} />
-//         <Route path="/Trailers/movie/:id" element={<Movie />} />
-//         <Route path="/Trailers/search/:query" element={<Search />} />
-//       </Routes>
-//     </main>
-//   );
-// }
-
 const App = createBrowserRouter([
   {
     path: "/Trailers",
