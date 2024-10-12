@@ -16,16 +16,21 @@ export default function Library(props) {
     <div className="library">
       <div className="library-top">
         <div className="library-title">{data.library_title}</div>
-        {data.total_results <= data.results?.length ? null : (
+        {/*data.total_results <= data.results?.length ? null /*: (
           <button className="secondary">See all &#62;</button>
-        )}
+        )*/}
       </div>
       <div className="items">
         {data.results?.map((item, key) => (
           <div
             className="item"
             onClick={() =>
-              navigate(`/Trailers/movie/${item.id}`, { state: { id: item.id } })
+              navigate(`/Trailers/movie/${item.id}`, {
+                state: {
+                  id: item.id,
+                  isMovie: item.first_air_date ? true : false,
+                },
+              })
             }
             key={key}
           >
@@ -39,9 +44,10 @@ export default function Library(props) {
               <IconMovie />
             )}
             <div className="info">
-              <div className="title">{item.title}</div>
+              <div className="title">{item.title || item.name}</div>
               <div className="year">
-                {new Date(item.release_date).getFullYear()}
+                {new Date(item.release_date).getFullYear() ||
+                  new Date(item.first_air_date).getFullYear()}
               </div>
             </div>
             <div className="rating">
@@ -71,7 +77,9 @@ export function Results(props) {
           <div
             className="item"
             onClick={() =>
-              navigate(`/Trailers/movie/${item.id}`, { state: { id: item.id } })
+              navigate(`/Trailers/movie/${item.id}`, {
+                state: { id: item.id, isMovie: item.first_air_date },
+              })
             }
             key={key}
           >

@@ -16,7 +16,8 @@ import Loader from "../components/Loader";
 export default function Movie(argument) {
   const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams()
+  const { itemId, isMovie } = location.state || {};
+  const params = useParams();
   const [data, setData] = useState({});
   const [casts, setCasts] = useState({});
   const [libraries, setLibraries] = useState([]);
@@ -25,36 +26,60 @@ export default function Movie(argument) {
   const [id, setId] = useState(null);
   useEffect(() => {
     if (!id) return;
-    imdbServer.movieDetails(id).then((data) => {
-      setData(data);
-    });
-    imdbServer.movieCast(id).then((data) => {
-      setCasts(data);
-    });
-    imdbServer.similarMovies(id).then((data) => {
-      imdbServer.recommendedMovies(id).then((data1) => {
-        setLibraries([
-          {
-            library_title: "Similar Movies",
-            ...data,
-          },
-          { library_title: "Recommended Movies", ...data1 },
-        ]);
+    if (!isMovie) {
+      imdbServer.movieDetails(id).then((data) => {
+        setData(data);
       });
-    });
-    imdbServer.trailer(id).then((data) => {
-      data = data.results.filter(
-        (item) => item.type === "Trailer" && item.official === true
-      );
-      setTrailer(data[0]);
-    });
+      imdbServer.movieCast(id).then((data) => {
+        setCasts(data);
+      });
+      imdbServer.similarMovies(id).then((data) => {
+        imdbServer.recommendedMovies(id).then((data1) => {
+          setLibraries([
+            {
+              library_title: "Similar Movies",
+              ...data,
+            },
+            { library_title: "Recommended Movies", ...data1 },
+          ]);
+        });
+      });
+      imdbServer.trailer(id).then((data) => {
+        data = data.results.filter(
+          (item) => item.type === "Trailer" && item.official === true,
+        );
+        setTrailer(data[0]);
+      });
+    } else {
+      imdbServer.seriesDetails(id).then((data) => {
+        setData(data);
+      });
+      imdbServer.seriesCast(id).then((data) => {
+        setCasts(data);
+      });
+      imdbServer.similarSeries(id).then((data) => {
+        imdbServer.recommendedSeries(id).then((data1) => {
+          setLibraries([
+            {
+              library_title: "Similar Movie Series",
+              ...data,
+            },
+            { library_title: "Recommended Movie Series", ...data1 },
+          ]);
+        });
+      });
+      imdbServer.seriesTrailer(id).then((data) => {
+        data = data.results.filter((item) => (item.official = true));
+        setTrailer(data[0]);
+      });
+    }
   }, [id]);
   const share = () => {
     navigator.share({
       title: data.title,
       url: `https://jonestly-source.github.io/Trailers/${data.id}`,
     });
-  }
+  };
 
   useEffect(() => {
     setData({});
@@ -78,11 +103,16 @@ export default function Movie(argument) {
           {!play ? (
             <>
               <img
-                src={`https://image.tmdb.org/t/p/original/${data.backdrop_path ? data.backdrop_path : data.poster_path
-                  }`}
+                src={`https://image.tmdb.org/t/p/original/${
+                  data.backdrop_path ? data.backdrop_path : data.poster_path
+                }`}
                 alt={data.title}
               />
-              {trailer.key && (<button onClick={() => setPlay(true)} style={{ zIndex: 1 }}><IconPlayerPlay /></button>)}
+              {trailer.key && (
+                <button onClick={() => setPlay(true)} style={{ zIndex: 1 }}>
+                  <IconPlayerPlay />
+                </button>
+              )}
             </>
           ) : (
             <iframe
@@ -92,7 +122,6 @@ export default function Movie(argument) {
               allow="autoplay"
               allowFullScreen
               loading="lazy"
-
             />
           )}
         </div>
@@ -142,7 +171,7 @@ export default function Movie(argument) {
         </div>
       </div>
       {libraries.map((library, i) =>
-        library.results.length ? <Library data={library} key={i} /> : null
+        library.results.length ? <Library data={library} key={i} /> : null,
       )}
     </>
   ) : (

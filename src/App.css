@@ -34,7 +34,6 @@ button {
   cursor: pointer;
 }
 
-
 svg {
   height: 100%;
   width: 100%;
@@ -44,24 +43,25 @@ svg {
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
-* {
-  scrollbar-width: auto;
-  scrollbar-color: #e30d0d transparent;
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #e30d0d;
-  border-radius: 10px;
-}
+/* * { */
+/*   scrollbar-width: auto; */
+/*   scrollbar-color: #e30d0d transparent; */
+/* } */
+/**/
+/* /* Chrome, Edge, and Safari */
+*/
+/* *::-webkit-scrollbar { */
+/*   width: 8px; */
+/* } */
+/**/
+/* *::-webkit-scrollbar-track { */
+/*   background: transparent; */
+/* } */
+/**/
+/* *::-webkit-scrollbar-thumb { */
+/*   background-color: #e30d0d; */
+/*   border-radius: 10px; */
+/* } */
 
 main {
   display: flex;
@@ -385,7 +385,6 @@ img {
   place-items: center;
 }
 
-
 .results .item > .info {
   display: flex;
   flex-direction: column;
@@ -434,7 +433,7 @@ nav > button.return {
   width: 100%;
   aspect-ratio: 16 / 9;
   position: relative;
-  border-radius: clamp(0%, 10%, .5rem);
+  border-radius: clamp(0%, 10%, 0.5rem);
   overflow: hidden;
 }
 
@@ -540,7 +539,6 @@ nav > button.return {
   font-size: 1.2rem;
 }
 
-
 .details > :is(.cast, .synopsis) {
   display: flex;
   flex-direction: column;
@@ -574,8 +572,6 @@ nav > button.return {
   color: var(--secondary-color);
   font-size: 0.6rem;
 }
-
-
 
 .details > .synopsis > div + p {
   text-indent: 1rem;
@@ -680,7 +676,7 @@ nav > button.return {
   }
   .details {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, calc(50% - .5rem)));
+    grid-template-columns: repeat(auto-fill, minmax(16rem, calc(50% - 0.5rem)));
     margin-inline: 1rem;
     grid-gap: 1rem;
     align-items: center;
@@ -688,7 +684,7 @@ nav > button.return {
   .details > .banner {
     grid-area: 1 / 1 / 4 / 2;
   }
-  
+
   .details > .info {
     grid-area: 1 / 2 / 2 / 3;
   }
@@ -710,7 +706,7 @@ nav > button.return {
   }
 }
 
-@media screen and (600px <= width <= 700px) {  
+@media screen and (600px <= width <= 700px) {
   .details > .cast {
     grid-area: 2 / 1 / 3 / 3;
   }
@@ -723,7 +719,7 @@ nav > button.return {
   .results > .items :is(img, svg) {
     max-width: 30%;
   }
-  .results > .items > .item{
+  .results > .items > .item {
     display: flex;
     flex-direction: row;
   }

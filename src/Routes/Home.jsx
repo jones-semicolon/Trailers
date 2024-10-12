@@ -15,12 +15,18 @@ export default function Home() {
       imdbServer.upcomingMovies().then((data1) => {
         imdbServer.popularMovies().then((data2) => {
           imdbServer.topRatedMovies().then((data3) => {
-            setLibraries([
-              { library_title: "Trending Movies", ...data },
-              { library_title: "Upcoming Movies", ...data1 },
-              { library_title: "Popular Movies", ...data2 },
-              { library_title: "Top Rated Movies", ...data3 },
-            ]);
+            imdbServer.trendingSeries().then((data4) => {
+              imdbServer.topRatedSeries().then((data5) => {
+                setLibraries([
+                  { library_title: "Trending Movies", ...data },
+                  { library_title: "Upcoming Movies", ...data1 },
+                  { library_title: "Popular Movies", ...data2 },
+                  { library_title: "Popular Movie Series", ...data4 },
+                  { library_title: "Top rated Movie Series", ...data5 },
+                  { library_title: "Top Rated Movies", ...data3 },
+                ]);
+              });
+            });
           });
         });
       });
