@@ -24,8 +24,6 @@ body,
   background-color: var(--bg-color);
   overflow-x: hidden;
   font-family: Poppins, helvetica;
-  height: 100vh;
-  height: 100dvh;
   overflow-y: overlay;
 }
 
@@ -47,21 +45,34 @@ svg {
 /*   scrollbar-width: auto; */
 /*   scrollbar-color: #e30d0d transparent; */
 /* } */
-/**/
-/* /* Chrome, Edge, and Safari */
-*/
+
+/* Chrome, Edge, and Safari */
+
 /* *::-webkit-scrollbar { */
 /*   width: 8px; */
 /* } */
-/**/
-/* *::-webkit-scrollbar-track { */
-/*   background: transparent; */
-/* } */
-/**/
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* *::-webkit-scrollbar-thumb { */
 /*   background-color: #e30d0d; */
 /*   border-radius: 10px; */
 /* } */
+body {
+  overflow: auto;
+  scrollbar-width: thin;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
+  scrollbar-color: #888 transparent;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  /* For WebKit browsers */
+}
 
 main {
   display: flex;
@@ -153,8 +164,9 @@ img {
 
 .carousel {
   position: relative;
-  aspect-ratio: 16 / 9;
-  max-height: 250px;
+  aspect-ratio: 16 / 10;
+  max-height: 500px;
+  min-width: 100%;
 }
 
 .carousel .movies {
@@ -174,8 +186,10 @@ img {
 .carousel .movies,
 .library > .items,
 .casts {
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .carousel .movie:after {
@@ -311,7 +325,7 @@ img {
   inset: auto auto 10px 8px;
   z-index: 2;
   display: flex;
-  font-size: 1rem;
+  font-size: clamp(0.7rem, 1vw, 1rem);
   flex-direction: column;
   font-weight: 600;
   min-width: 0;
@@ -420,6 +434,12 @@ nav > button.return {
   flex-shrink: 0;
   display: grid;
   place-items: center;
+}
+
+.navbar-scroll {
+  background-color: #333;
+  transition: "background-color 0.3s";
+  /* Set your desired background color */
 }
 
 .details > div + :is(div, p) {
@@ -665,15 +685,17 @@ nav > button.return {
   }
 }
 
-@media screen and (width >= 600px) {
+@media screen and (width >=600px) {
   .search-button input {
     display: initial !important;
   }
+
   .search-button {
     background-color: hsl(0 2% 20% / 0.7);
     width: 100%;
     outline: 0.5px solid currentcolor;
   }
+
   .details {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16rem, calc(50% - 0.5rem)));
@@ -681,6 +703,7 @@ nav > button.return {
     grid-gap: 1rem;
     align-items: center;
   }
+
   .details > .banner {
     grid-area: 1 / 1 / 4 / 2;
   }
@@ -688,37 +711,42 @@ nav > button.return {
   .details > .info {
     grid-area: 1 / 2 / 2 / 3;
   }
+
   .details > .synopsis {
     grid-area: 3 / 2 / 4 / 3;
   }
+
   .details > .cast {
     grid-area: 2 / 2 / 3 / 3;
     overflow-x: auto;
   }
 }
 
-@media screen and (600px <= width <= 1227px) {
+@media screen and (600px <=width <=1227px) {
   .details > .synopsis {
     grid-area: 3 / 1 / 4 / 3;
   }
+
   .details > .banner {
     grid-area: 1 / 1 / 3 / 2;
   }
 }
 
-@media screen and (600px <= width <= 700px) {
+@media screen and (600px <=width <=700px) {
   .details > .cast {
     grid-area: 2 / 1 / 3 / 3;
   }
+
   .details > .banner {
     grid-area: 1 / 1 / 2 / 2;
   }
 }
 
-@media screen and (width <= 360px) {
+@media screen and (width <=360px) {
   .results > .items :is(img, svg) {
     max-width: 30%;
   }
+
   .results > .items > .item {
     display: flex;
     flex-direction: row;

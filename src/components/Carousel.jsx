@@ -24,7 +24,7 @@ export default function Carousel() {
       0
     ) {
       setActiveImage(
-        e.currentTarget.scrollLeft / e.currentTarget.childNodes[0].offsetWidth
+        e.currentTarget.scrollLeft / e.currentTarget.childNodes[0].offsetWidth,
       );
     }
   };
@@ -39,7 +39,7 @@ export default function Carousel() {
     if (images.length) {
       const scroll = setInterval(() => {
         setActiveImage((activeImage) =>
-          activeImage >= images.length - 1 ? 0 : activeImage + 1
+          activeImage >= images.length - 1 ? 0 : activeImage + 1,
         );
       }, 5000);
       return () => clearInterval(scroll);

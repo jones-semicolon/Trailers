@@ -26,53 +26,29 @@ export default function Movie(argument) {
   const [id, setId] = useState(null);
   useEffect(() => {
     if (!id) return;
-    if (!isMovie) {
-      imdbServer.movieDetails(id).then((data) => {
-        setData(data);
+    imdbServer.mediaDetails(id, isMovie ? "movie" : "tv").then((data) => {
+      setData(data);
+    });
+    imdbServer.mediaCast(id, isMedia ? "movie" : "tv").then((data) => {
+      setCasts(data);
+    });
+    imdbServer.similarMedia(id, isMovie ? "movie" : "tv").then((data) => {
+      imdbServer.recommendedMovies(id).then((data1) => {
+        setLibraries([
+          {
+            library_title: "Similar Media",
+            ...data,
+          },
+          { library_title: "Recommended Media", ...data1 },
+        ]);
       });
-      imdbServer.movieCast(id).then((data) => {
-        setCasts(data);
-      });
-      imdbServer.similarMovies(id).then((data) => {
-        imdbServer.recommendedMovies(id).then((data1) => {
-          setLibraries([
-            {
-              library_title: "Similar Movies",
-              ...data,
-            },
-            { library_title: "Recommended Movies", ...data1 },
-          ]);
-        });
-      });
-      imdbServer.trailer(id).then((data) => {
-        data = data.results.filter(
-          (item) => item.type === "Trailer" && item.official === true,
-        );
-        setTrailer(data[0]);
-      });
-    } else {
-      imdbServer.seriesDetails(id).then((data) => {
-        setData(data);
-      });
-      imdbServer.seriesCast(id).then((data) => {
-        setCasts(data);
-      });
-      imdbServer.similarSeries(id).then((data) => {
-        imdbServer.recommendedSeries(id).then((data1) => {
-          setLibraries([
-            {
-              library_title: "Similar Movie Series",
-              ...data,
-            },
-            { library_title: "Recommended Movie Series", ...data1 },
-          ]);
-        });
-      });
-      imdbServer.seriesTrailer(id).then((data) => {
-        data = data.results.filter((item) => (item.official = true));
-        setTrailer(data[0]);
-      });
-    }
+    });
+    imdbServer.trailer(id, isMovie ? "move" : "tv").then((data) => {
+      data = data.results.filter(
+        (item) => item.type === "Trailer" && item.official === true,
+      );
+      setTrailer(data[0]);
+    });
   }, [id]);
   const share = () => {
     navigator.share({

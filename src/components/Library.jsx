@@ -36,9 +36,8 @@ export default function Library(props) {
           >
             {item.backdrop_path || item.poster_path ? (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${
-                  item.backdrop_path || item.poster_path
-                }`}
+                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path || item.poster_path
+                  }`}
               />
             ) : (
               <IconMovie />
@@ -78,25 +77,28 @@ export function Results(props) {
             className="item"
             onClick={() =>
               navigate(`/Trailers/movie/${item.id}`, {
-                state: { id: item.id, isMovie: item.first_air_date },
+                state: {
+                  id: item.id,
+                  isMovie: item.media_type == "movie" ? true : false,
+                },
               })
             }
             key={key}
           >
-            {item.backdrop_path || item.poster_path ? (
+            {item.poster_path ? (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${
-                  item.backdrop_path || item.poster_path
-                }`}
-                alt={item.title}
+                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path || item.poster_path
+                  }`}
+                alt={item.title || item.name}
               />
             ) : (
               <IconMovie />
             )}
             <div className="info">
-              <div className="title">{item.title}</div>
+              <div className="title">{item.title || item.name}</div>
               <div class="year">
-                {new Date(item.release_date).getFullYear()}
+                {new Date(item.release_date).getFullYear() ||
+                  new Date(item.first_air_date).getFullYear()}
               </div>
             </div>
           </div>

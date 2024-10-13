@@ -1,4 +1,3 @@
-import react from "react";
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
@@ -8,196 +7,45 @@ const headers = {
   Authorization: `Bearer ${API_KEY}`,
 };
 
+const fetchData = async (url) => {
+  const res = await axios.get(`${BASED_URL}${url}`, { headers });
+  return res.data;
+};
+
 export default {
   upcomingMovies() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/upcoming?api_key=${API_KEY}&page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
+    return fetchData("/movie/upcoming?page=1");
   },
-  topRatedMovies() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/top_rated?language=en&page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
+  topRatedMedia(mediaType) {
+    return fetchData(`/${mediaType}/top_rated?language=en&page=1`);
   },
-  movieDetails(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
+  mediaDetails(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}?language=en`);
   },
-  movieCast(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}/credits?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
+  mediaCast(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}/credits?language=en`);
   },
-  seriesDetails(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
+  popularMedia(mediaType) {
+    return fetchData(
+      `/discover/${mediaType}?include_adult=true&language=en-US&page=1&sort_by=popularity.desc`,
+    );
   },
-  seriesCast(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}/credits?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
+  trendingMedia(mediaType) {
+    return fetchData(`/trending/${mediaType}/week`);
   },
-  popularMovies() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
-        headers,
-      });
-      return await res.data;
-    })();
+  similarMedia(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}/similar?page=1`);
   },
-  trendingMovies() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/trending/movie/week`,
-        headers,
-      });
-      return await res.data;
-    })();
+  recommendedMedia(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}/recommendations?page=1`);
   },
-  similarMovies(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}/similar?page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
+  trailer(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}/videos`);
   },
-  recommendedMovies(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}/recommendations?page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  similarSeries(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}/similar?page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  recommendedSeries(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}/recommendations?page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  trailer(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}/videos`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  seriesTrailer(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}/videos`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  backdropSeries(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/${id}/images?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-
-  backdrop(id) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/movie/${id}/images?language=en`,
-        headers,
-      });
-      return await res.data;
-    })();
+  backdrop(id, mediaType) {
+    return fetchData(`/${mediaType}/${id}/images?language=en`);
   },
   search(query) {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/search/movie?language=en&query=${query}`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  trendingSeries() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/trending/tv/day?language=en-US`,
-        headers,
-      });
-      return await res.data;
-    })();
-  },
-  topRatedSeries() {
-    return (async () => {
-      let res = await axios.request({
-        method: "GET",
-        url: `${BASED_URL}/tv/top_rated?language=en-US&page=1`,
-        headers,
-      });
-      return await res.data;
-    })();
+    return fetchData(`/search/multi?language=en&query=${query}`);
   },
 };
