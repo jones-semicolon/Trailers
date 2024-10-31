@@ -20,42 +20,44 @@ export default function Library(props) {
           <button className="secondary">See all &#62;</button>
         )*/}
       </div>
-      <div className="items">
-        {data.results?.map((item, key) => (
-          <div
-            className="item"
-            onClick={() =>
-              navigate(`/Trailers/movie/${item.id}`, {
-                state: {
-                  id: item.id,
-                  isMovie: item.first_air_date ? false : true,
-                },
-              })
-            }
-            key={key}
-          >
-            {item.backdrop_path || item.poster_path ? (
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${
-                  item.backdrop_path || item.poster_path
-                }`}
-              />
-            ) : (
-              <IconMovie />
-            )}
-            <div className="info">
-              <div className="title">{item.title || item.name}</div>
-              <div className="year">
-                {new Date(item.release_date).getFullYear() ||
-                  new Date(item.first_air_date).getFullYear()}
+      <div className="items-wrapper">
+        <div className="items">
+          {data.results?.map((item, key) => (
+            <div
+              className="item"
+              onClick={() =>
+                navigate(`/Trailers/movie/${item.id}`, {
+                  state: {
+                    id: item.id,
+                    isMovie: item.first_air_date ? false : true,
+                  },
+                })
+              }
+              key={key}
+            >
+              {item.backdrop_path || item.poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${
+                    item.backdrop_path || item.poster_path
+                  }`}
+                />
+              ) : (
+                <IconMovie />
+              )}
+              <div className="info">
+                <div className="title">{item.title || item.name}</div>
+                <div className="year">
+                  {new Date(item.release_date).getFullYear() ||
+                    new Date(item.first_air_date).getFullYear()}
+                </div>
+              </div>
+              <div className="rating">
+                <IconStarFilled />
+                {item.vote_average}
               </div>
             </div>
-            <div className="rating">
-              <IconStarFilled />
-              {item.vote_average}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
