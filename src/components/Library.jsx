@@ -28,7 +28,7 @@ export default function Library(props) {
               navigate(`/Trailers/movie/${item.id}`, {
                 state: {
                   id: item.id,
-                  isMovie: item.first_air_date ? true : false,
+                  isMovie: item.first_air_date ? false : true,
                 },
               })
             }
@@ -36,8 +36,9 @@ export default function Library(props) {
           >
             {item.backdrop_path || item.poster_path ? (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path || item.poster_path
-                  }`}
+                src={`https://image.tmdb.org/t/p/w500/${
+                  item.backdrop_path || item.poster_path
+                }`}
               />
             ) : (
               <IconMovie />
@@ -87,8 +88,9 @@ export function Results(props) {
           >
             {item.poster_path ? (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path || item.poster_path
-                  }`}
+                src={`https://image.tmdb.org/t/p/w500/${
+                  item.backdrop_path || item.poster_path
+                }`}
                 alt={item.title || item.name}
               />
             ) : (
@@ -96,7 +98,7 @@ export function Results(props) {
             )}
             <div className="info">
               <div className="title">{item.title || item.name}</div>
-              <div class="year">
+              <div className="year">
                 {new Date(item.release_date).getFullYear() ||
                   new Date(item.first_air_date).getFullYear()}
               </div>

@@ -20,6 +20,7 @@ body,
   --primary-color: hsl(0 89% 47%);
   --bg-color: hsl(0 2% 2%);
   --secondary-color: hsl(0 0% 55%);
+  --size: clamp(5px, 2.5vw, 20px);
   color: var(--white);
   background-color: var(--bg-color);
   overflow-x: hidden;
@@ -103,6 +104,7 @@ main:has(nav > button:first-child) nav {
 iframe {
   z-index: 1;
   border: none;
+  margin: var(--size);
 }
 
 .logo {
@@ -164,9 +166,9 @@ img {
 
 .carousel {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   max-height: 500px;
-  min-width: 100%;
+  /* min-width: 100%; */
 }
 
 .carousel .movies {
@@ -198,7 +200,13 @@ img {
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(transparent, var(--bg-color));
+  /* background-image: linear-gradient(transparent, var(--bg-color)); */
+  background: radial-gradient(
+    circle,
+    transparent 8%,
+    rgba(0, 0, 0, 0.27317976340269434) 47%,
+    rgba(0, 0, 0, 1) 100%
+  );
   z-index: 1;
 }
 
@@ -265,7 +273,7 @@ img {
 /*libraries*/
 
 .library {
-  --size: clamp(5px, 5vw, 20px);
+  --size: clamp(5px, 2.5vw, 20px);
   display: flex;
   flex-direction: column;
   margin-block: 1rem;
@@ -450,11 +458,12 @@ nav > button.return {
   display: grid;
   grid-template: 1fr;
   place-items: center;
-  width: 100%;
+  /* width: 100%; */
   aspect-ratio: 16 / 9;
   position: relative;
   border-radius: clamp(0%, 10%, 0.5rem);
   overflow: hidden;
+  margin: var(--size);
 }
 
 .details .banner::after {
@@ -580,7 +589,8 @@ nav > button.return {
   max-width: 100px;
 }
 
-.cast > .casts :is(img, svg) {
+.cast > .casts :is(img, svg),
+.profile > .cast > :is(img) {
   width: 100%;
   height: initial;
   aspect-ratio: 1;
@@ -596,6 +606,36 @@ nav > button.return {
 .details > .synopsis > div + p {
   text-indent: 1rem;
   text-align: justify;
+}
+
+/* .profile * { */
+/*   border: 1px solid red; */
+/* } */
+
+.profile {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.profile > .cast > :is(img) {
+  width: min(250px, 35vw);
+}
+
+.profile > .cast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile > .cast > .name {
+  font-weight: bold;
+  font-size: clamp(1.5rem, 5vw + 0.5rem, 3rem);
 }
 
 .details > :last-child {

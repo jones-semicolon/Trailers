@@ -29,31 +29,31 @@ export default function Movie(argument) {
     imdbServer.mediaDetails(id, isMovie ? "movie" : "tv").then((data) => {
       setData(data);
     });
-    imdbServer.mediaCast(id, isMedia ? "movie" : "tv").then((data) => {
+    imdbServer.mediaCast(id, isMovie ? "movie" : "tv").then((data) => {
       setCasts(data);
     });
     imdbServer.similarMedia(id, isMovie ? "movie" : "tv").then((data) => {
-      imdbServer.recommendedMovies(id).then((data1) => {
-        setLibraries([
-          {
-            library_title: "Similar Media",
-            ...data,
-          },
-          { library_title: "Recommended Media", ...data1 },
-        ]);
-      });
+      imdbServer
+        .recommendedMedia(id, isMovie ? "movie" : "tv")
+        .then((data1) => {
+          setLibraries([
+            {
+              library_title: "Similar Media",
+              ...data,
+            },
+            { library_title: "Recommended Media", ...data1 },
+          ]);
+        });
     });
-    imdbServer.trailer(id, isMovie ? "move" : "tv").then((data) => {
-      data = data.results.filter(
-        (item) => item.type === "Trailer" && item.official === true,
-      );
+    imdbServer.trailer(id, isMovie ? "movie" : "tv").then((data) => {
+      data = data.results.filter((item) => item.type === "Trailer");
       setTrailer(data[0]);
     });
   }, [id]);
   const share = () => {
     navigator.share({
       title: data.title,
-      url: `https://jonestly-source.github.io/Trailers/${data.id}`,
+      url: `https://jones-semicolon.github.io/Trailers/${data.id}`,
     });
   };
 
@@ -124,7 +124,17 @@ export default function Movie(argument) {
           <div className="title">Top Cast</div>
           <div className="casts">
             {casts.cast?.slice(0, 10).map((ferson, i) => (
-              <div key={i}>
+              <div
+                key={ferson.id || i}
+                id={ferson.id || i}
+                onClick={() =>
+                  navigate(`/Trailers/artist/${ferson.id}`, {
+                    state: {
+                      id: ferson.id,
+                    },
+                  })
+                }
+              >
                 {ferson.profile_path ? (
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${ferson.profile_path}`}

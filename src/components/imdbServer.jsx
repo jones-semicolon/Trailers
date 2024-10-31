@@ -48,4 +48,11 @@ export default {
   search(query) {
     return fetchData(`/search/multi?language=en&query=${query}`);
   },
+  person(id, options = null) {
+    const query = new URLSearchParams({
+      language: "en-US",
+      ...options,
+    });
+    return fetchData(`/person/${id}?${query}`);
+  },
 };
